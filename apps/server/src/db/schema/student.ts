@@ -3,6 +3,7 @@ import { createId } from "utils/create-id";
 
 import { user } from "./auth";
 import { section } from "./section";
+import { auditFields } from "./auditFields";
 
 export const student = pgTable("student", {
   id: varchar("id", { length: 26 }).primaryKey().$defaultFn(createId),
@@ -14,7 +15,5 @@ export const student = pgTable("student", {
     .references(() => section.id)
     .notNull(),
   batchName: varchar("batch_name", { length: 20 }),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-  deletedAt: timestamp("deleted_at"),
+  ...auditFields,
 });

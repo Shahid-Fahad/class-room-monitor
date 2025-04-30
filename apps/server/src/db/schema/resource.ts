@@ -3,6 +3,7 @@ import { createId } from "utils/create-id";
 
 import { user } from "./auth";
 import { section } from "./section";
+import { auditFields } from "./auditFields";
 
 export const resource = pgTable("resource", {
   id: varchar("id", { length: 26 }).primaryKey().$defaultFn(createId),
@@ -15,10 +16,6 @@ export const resource = pgTable("resource", {
     .references(() => section.id)
     .notNull(),
   versionNumber: integer("version_number"),
-  uploadedAt: timestamp("uploaded_at"),
   duration: integer("duration"),
-
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-  deletedAt: timestamp("deleted_at"),
+  ...auditFields,
 });

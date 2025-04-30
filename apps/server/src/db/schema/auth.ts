@@ -3,24 +3,20 @@ import { createId } from "utils/create-id";
 
 export const user = pgTable("user", {
   id: varchar("id", { length: 26 }).primaryKey().$defaultFn(createId),
-  userName: varchar("user_name", { length: 50 }).notNull(),
   name: varchar("name", { length: 100 }),
   email: varchar("email", { length: 100 }).notNull(),
-  contactNumber: varchar("contact_number", { length: 20 }),
-  passkeyId: varchar("passkey_id", { length: 100 }),
-  mfaEnabled: boolean("mfa_enabled").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-  deletedAt: timestamp("deleted_at"),
+  emailVerified: boolean("email_verified").default(false).notNull(),
+  image: varchar("image"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export const session = pgTable("session", {
   id: varchar("id", { length: 26 }).primaryKey().$defaultFn(createId),
   expiresAt: timestamp("expires_at").notNull(),
   token: varchar("token").notNull().unique(),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
-  deletedAt: timestamp("deleted_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
   ipAddress: varchar("ip_address"),
   userAgent: varchar("user_agent"),
   userId: varchar("user_id")

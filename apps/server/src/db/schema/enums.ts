@@ -1,7 +1,7 @@
 import { pgEnum } from "drizzle-orm/pg-core";
 
 export const roleEnum = pgEnum("role_name", [
-  "Super Admin",
+  "SuperAdmin",
   "Chairman",
   "Admin",
   "CR",
@@ -9,16 +9,6 @@ export const roleEnum = pgEnum("role_name", [
   "Student",
 ]);
 export type Role = (typeof roleEnum.enumValues)[number];
-
-export const dayEnum = pgEnum("day", [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-]);
 
 export const approvalStatusEnum = pgEnum("approval_status", [
   "Pending",
