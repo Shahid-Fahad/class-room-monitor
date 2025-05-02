@@ -1,10 +1,16 @@
-import { pgTable, varchar, timestamp, boolean } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  varchar,
+  timestamp,
+  boolean,
+  integer,
+} from "drizzle-orm/pg-core";
 import { createId } from "utils/create-id";
 
 export const user = pgTable("user", {
-  id: varchar("id", { length: 26 }).primaryKey().$defaultFn(createId),
-  name: varchar("name", { length: 100 }),
-  email: varchar("email", { length: 100 }).notNull(),
+  id: varchar("id").primaryKey().$defaultFn(createId),
+  name: varchar("name"),
+  email: varchar("email").notNull(),
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: varchar("image"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -12,7 +18,7 @@ export const user = pgTable("user", {
 });
 
 export const session = pgTable("session", {
-  id: varchar("id", { length: 26 }).primaryKey().$defaultFn(createId),
+  id: varchar("id").primaryKey().$defaultFn(createId),
   expiresAt: timestamp("expires_at").notNull(),
   token: varchar("token").notNull().unique(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -25,7 +31,7 @@ export const session = pgTable("session", {
 });
 
 export const account = pgTable("account", {
-  id: varchar("id", { length: 26 }).primaryKey().$defaultFn(createId),
+  id: varchar("id").primaryKey().$defaultFn(createId),
   accountId: varchar("account_id").notNull(),
   providerId: varchar("provider_id").notNull(),
   userId: varchar("user_id")
@@ -43,10 +49,25 @@ export const account = pgTable("account", {
 });
 
 export const verification = pgTable("verification", {
-  id: varchar("id", { length: 26 }).primaryKey().$defaultFn(createId),
+  id: varchar("id").primaryKey().$defaultFn(createId),
   identifier: varchar("identifier").notNull(),
   value: varchar("value").notNull(),
   expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at"),
   updatedAt: timestamp("updated_at"),
+});
+
+export const passkey = pgTable("passkey", {
+  id: varchar("id").primaryKey().$defaultFn(createId),
+  name: varchar("name"),
+  publicKey: varchar("publicKey").notNull(),
+  userId: varchar("user_id")
+    .notNull()
+    .references(() => user.id),
+  credentialID: varchar("credential_ID").notNull(),
+  counter: integer("counter").notNull(),
+  deviceType: varchar("device_type").notNull(),
+  backedUp: boolean("backed_up").notNull(),
+  transports: varchar("transports").notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
 });
