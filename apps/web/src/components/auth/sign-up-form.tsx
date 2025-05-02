@@ -3,10 +3,10 @@ import { useForm } from "@tanstack/react-form";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { z } from "zod";
-import Loader from "./loader";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import Loader from "../loader";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 export default function SignUpForm({
   onSwitchToSignIn,
@@ -25,6 +25,8 @@ export default function SignUpForm({
       name: "",
     },
     onSubmit: async ({ value }) => {
+     
+
       await authClient.signUp.email(
         {
           email: value.email,
@@ -32,10 +34,11 @@ export default function SignUpForm({
           name: value.name,
         },
         {
-          onSuccess: () => {
-            navigate({
-              to: "/dashboard",
-            });
+          onSuccess: async () => {
+            // navigate({
+            //   to: "/dashboard",
+            // });
+            await authClient.passkey.addPasskey();
             toast.success("Sign up successful");
           },
           onError: (error) => {
@@ -43,6 +46,7 @@ export default function SignUpForm({
           },
         },
       );
+      
     },
     validators: {
       onSubmit: z.object({
@@ -144,7 +148,7 @@ export default function SignUpForm({
               className="w-full"
               disabled={!state.canSubmit || state.isSubmitting}
             >
-              {state.isSubmitting ? "Submitting..." : "Sign Up"}
+              {state.isSubmitting ? "Creating" : "Create with Passkey"}
             </Button>
           )}
         </form.Subscribe>
@@ -154,9 +158,9 @@ export default function SignUpForm({
         <Button
           variant="link"
           onClick={onSwitchToSignIn}
-          className="text-indigo-600 hover:text-indigo-800"
+          className="text-indigo-600 hover:text-indigo-800 cursor-pointer"
         >
-          Already have an account? Sign In
+          Already have an account? Log In
         </Button>
       </div>
     </div>
