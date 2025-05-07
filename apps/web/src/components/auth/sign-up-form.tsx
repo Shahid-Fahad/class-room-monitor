@@ -35,11 +35,12 @@ export default function SignUpForm({
         },
         {
           onSuccess: async () => {
-            // navigate({
-            //   to: "/dashboard",
-            // });
+            await authClient.twoFactor.enable({password: value.password});
             await authClient.passkey.addPasskey();
             toast.success("Sign up successful");
+            navigate({
+              to: "/dashboard",
+            });
           },
           onError: (error) => {
             toast.error(error.error.message);
