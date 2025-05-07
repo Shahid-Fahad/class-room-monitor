@@ -13,6 +13,7 @@ export const user = pgTable("user", {
   email: varchar("email").notNull(),
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: varchar("image"),
+  twoFactorEnabled: boolean("two_factor_enabled"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -70,4 +71,13 @@ export const passkey = pgTable("passkey", {
   backedUp: boolean("backed_up").notNull(),
   transports: varchar("transports").notNull(),
   createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export const twoFactor = pgTable("twoFactor", {
+  id: varchar("id").primaryKey().$defaultFn(createId),
+  userId: varchar("user_id")
+    .notNull()
+    .references(() => user.id),
+  secret: varchar("secret"),
+  backupCodes: varchar("backupCodes"),
 });

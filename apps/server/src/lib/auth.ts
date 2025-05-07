@@ -4,6 +4,7 @@ import { db } from "../db";
 import * as schema from "../db/schema/auth";
 import { passkey } from "better-auth/plugins/passkey";
 import "dotenv/config";
+import { twoFactor } from "better-auth/plugins";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -17,6 +18,15 @@ export const auth = betterAuth({
       rpID: process.env.RP_ID!,
       rpName: process.env.RP_NAME!,
       origin: process.env.ORIGIN!,
+    }),
+    twoFactor({
+      skipVerificationOnEnable: true,
+      otpOptions: {
+        async sendOTP({ user, otp }, request) {
+          console.log("user otp is: " + otp);
+          // send otp to user
+        },
+      },
     }),
   ],
 });

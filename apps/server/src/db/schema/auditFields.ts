@@ -1,7 +1,8 @@
-import { varchar, timestamp } from "drizzle-orm/pg-core";
+import { varchar, timestamp, boolean } from "drizzle-orm/pg-core";
 import { user } from "./auth";
 
 export const auditFields = {
+  isDeleted: boolean("is_deleted").default(false),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
   deletedAt: timestamp("deleted_at"),
