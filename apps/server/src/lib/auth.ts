@@ -5,6 +5,13 @@ import * as schema from "../db/schema/auth";
 import { passkey } from "better-auth/plugins/passkey";
 import "dotenv/config";
 import { twoFactor } from "better-auth/plugins";
+import { createAuthClient } from "better-auth/client";
+import { emailOTPClient } from "better-auth/client/plugins";
+import { sendEmail } from "./sendMail";
+
+export const authClient = createAuthClient({
+  plugins: [emailOTPClient()],
+});
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -23,8 +30,13 @@ export const auth = betterAuth({
       skipVerificationOnEnable: true,
       otpOptions: {
         async sendOTP({ user, otp }, request) {
-          console.log("user otp is: " + otp);
           // send otp to user
+          await sendEmail({
+            to: user.email,
+            subject: "Your verification code",
+            text: `Your OTP code is: ${otp}`,
+            html: `<p>Your OTP code is: <strong>${otp}</strong></p>`,
+          });
         },
       },
     }),
