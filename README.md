@@ -1,4 +1,4 @@
-# React + Tanstack Router + Hono + Drizzle
+# Class Monitoring System
 
 This project was created with a modern TypeScript stack that combines React, TanStack Router, Hono, tRPC, and more.
 
@@ -12,7 +12,7 @@ This project was created with a modern TypeScript stack that combines React, Tan
 - **tRPC** - End-to-end type-safe APIs
 - **Bun** - Runtime environment
 - **Drizzle** - TypeScript-first ORM
-- **SQLite/Turso** - Database engine
+- **Postgres** - Database engine
 - **Authentication** - Email & password authentication with Better Auth
 - **Biome** - Linting and formatting
 - **Husky** - Git hooks for code quality
@@ -27,12 +27,12 @@ bun install
 
 ## Database Setup
 
-This project uses SQLite with Drizzle ORM.
+This project uses Postgres with Drizzle ORM.
 
-1. Start the local SQLite database:
+1. Start the local Postgres database:
 
 ```bash
-cd apps/server && bun db:local
+bun db:local
 ```
 
 2. Update your `.env` file in the `apps/server` directory with the appropriate connection details if needed.
@@ -64,7 +64,10 @@ CORS_ORIGIN=http://localhost:3001
 # Generate a fresh 32‑byte secret for production (see next section)
 BETTER_AUTH_SECRET=kgQjeoklizgXI6FdfANg9VNse0m0ma9E
 BETTER_AUTH_URL=http://localhost:3000
-DATABASE_URL=file:./local.db
+DATABASE_URL=postgres://user:postgresDb@localhost:5432/class_monitoring_system
+RP_ID=localhost
+RP_NAME=class_monitoring_system
+ORIGIN=http://localhost:3001  
 ```
 
 ### Frontend (`apps/web/.env`)
@@ -110,6 +113,9 @@ BETTER_AUTH_SECRET=YOUR_PRODUCTION_SECRET_HERE
 # The public URL of your backend server
 BETTER_AUTH_URL=https://example-server.com
 DATABASE_URL=your_production_database_url
+RP_ID=example-server.com
+RP_NAME=class_monitoring_system
+ORIGIN=https://example-frontend.com
 ```
 
 **Frontend (`apps/web/.env`)**
@@ -140,5 +146,6 @@ react-tanstack-router-hono-drizzle/
 - `bun check-types`: Check TypeScript types across all apps
 - `bun db:push`: Push schema changes to database
 - `bun db:studio`: Open database studio UI
-- `cd apps/server && bun db:local`: Start the local SQLite database
+- `bun db:local`: Start the local Postgres database
+- `bun db:local-down`: Stop the local Postgres database
 - `bun check`: Run Biome formatting and linting

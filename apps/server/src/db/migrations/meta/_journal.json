@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1746032011004,
+      "tag": "0000_medical_mastermind",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1746062744813,
+      "tag": "0001_material_trish_tilby",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1746066499720,
+      "tag": "0002_sparkling_silver_sable",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1746366801361,
+      "tag": "0003_far_puck",
+      "breakpoints": true
+    }
+  ]
+}
