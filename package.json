@@ -22,6 +22,8 @@
 		"dev:server": "turbo -F server dev",
 		"db:push": "turbo -F server db:push",
 		"db:studio": "turbo -F server db:studio",
+		"db:local": "docker-compose up -d",
+		"db:local-down": "docker-compose down",
 		"check": "biome check --write ."
 	},
 	"workspaces": ["apps/*"]
