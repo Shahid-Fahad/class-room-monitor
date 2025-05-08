@@ -1,7 +1,18 @@
 {
 	"name": "react-tanstack-router-hono-drizzle",
+	"devDependencies": {
+		"turbo": "^2.5.2",
+		"@biomejs/biome": "1.9.4",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.5.1"
+	},
+	"lint-staged": {
+		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+			"biome check --write ."
+		]
+	},
+	"packageManager": "bun@1.2.10",
 	"private": true,
-	"workspaces": ["apps/*"],
 	"scripts": {
 		"dev": "turbo dev",
 		"build": "turbo build",
@@ -13,17 +24,5 @@
 		"db:studio": "turbo -F server db:studio",
 		"check": "biome check --write ."
 	},
-	"dependencies": {},
-	"devDependencies": {
-		"turbo": "^2.4.2",
-		"@biomejs/biome": "1.9.4",
-		"husky": "^9.1.7",
-		"lint-staged": "^15.5.0"
-	},
-	"lint-staged": {
-		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-			"biome check --write ."
-		]
-	},
-	"packageManager": "bun@1.2.10"
+	"workspaces": ["apps/*"]
 }
